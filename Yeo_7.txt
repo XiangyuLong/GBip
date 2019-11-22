@@ -5,6 +5,7 @@
 5 Limbic 
 6 Fronto Parietal 
 7 Default Mode 
+8 Deep grey matter
 
 Yeo AAL:
 
