@@ -17,7 +17,7 @@ cd ${analysisdirectory}/func/
 
 # band-pass filtering
 
-3dFourier -lowpass 0.08 -highpass 0.009 -retrend -prefix rest_resf.nii.gz rest_res.nii.gz
+3dBandpass -quiet -prefix rest_resf.nii.gz 0.009 0.08 rest_res.nii.gz
 
 # smoothing
 
