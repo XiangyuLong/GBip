@@ -17,7 +17,7 @@ cd ${analysisdirectory}/func/
 
 # band-pass filtering
 
-3dBandpass -nodetrend -quiet -prefix rest_resf.nii.gz 0.009 0.08 rest_res.nii.gz
+3dBandpass -quiet -prefix rest_resf.nii.gz 0.009 0.08 rest_res.nii.gz
 
 # transform to the standard space
 
