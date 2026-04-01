@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# pre-defined parameters
+
+participantID=$1
+FWHM=$2
+datadirectory=$3
+analysisdirectory="${datadirectory}${participantID}/"
+
+# regression of the 36 regressors and spikes (Satterthwaite et al., 2013)
+
+cd ${analysisdirectory}/func/
+
+3dDetrend -polort 1 -vector ./regressors/compcor_regsandspikes.1D -prefix rest_compcor_regs.nii.gz rest_dmdt.nii.gz
+
+3dcalc -a rest_compcor_regs.nii.gz -expr 'a+100' -prefix rest_res.nii.gz
+
+# band-pass filtering
+
+3dBandpass -quiet -prefix rest_resf.nii.gz 0.009 0.08 rest_res.nii.gz
+
+# smoothing
+
+fslmaths rest_resf.nii.gz -kernel gauss ${FWHM}/2.3548 -fmean rest_resf_smoothed
+
+# unzip
+gunzip rest_resf_smoothed.nii.gz

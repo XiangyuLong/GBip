@@ -31,9 +31,13 @@ cd ${analysisdirectory}/anat/
 
 3dresample -orient RPI -inset anat.nii.gz -prefix anat_RPI.nii.gz
 
+# could add "-shrink_fac 0.3" if the skull stripped brain didn't cover some gray matter areas
 3dSkullStrip -input anat_RPI.nii.gz -o_ply anat_surf.nii.gz
 
 3dcalc -a anat_RPI.nii.gz -b anat_surf.nii.gz -expr 'a*step(b)' -prefix anat_brain.nii.gz
+
+# -f value in bet can be changed if the skull stripped brain looks too big
+# bet anat_RPI.nii.gz anat_brain.nii.gz -f 0.45
 
 fast -t 1 -g -p -o segment anat_brain.nii.gz
 

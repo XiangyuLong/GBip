@@ -1,18 +1,19 @@
 function hm = gbip_restfMRI_create36regs(datadirectory,tr)
 
 % hm = gbip_create36regs(datadirectory,tr);
+% The datadirectory should be the full directory of the folder of regressors, such as: "/subj-001/func/regressors/"
 % if the time length < 4 minutes after scrubbing, hm = 1;
 
-cd(datadirectory);
+% cd(datadirectory);
 % a = exist('rest_dvars_matrix.txt');
-b = exist('rest_fd_matrix.txt');
+b = exist([datadirectory,'/rest_fd_matrix.txt']);
 % if a == 0 || b == 0
 if b == 0
     rest_fd_matrix = [];
 else
-    load rest_fd_matrix.txt;
+    load([datadirectory,'/rest_fd_matrix.txt']);
 end
-load csf.1D
+load([datadirectory,'/csf.1D']);
 NumberofVolumes = length(csf);
 % else
     
@@ -55,15 +56,14 @@ end
 
 % create 36 regressors (Satterthwaite et al.,2013)
 
-load csf.1D;
-g = load('global.1D');
-load wm.1D;
+g = load([datadirectory,'/global.1D']);
+load([datadirectory,'/wm.1D']);
 wm = wm - mean(wm);% avoid quadratic term self-correlation
 csf = csf - mean(csf);
 g = g - mean(g);
-load rest_mcf.par;
+load([datadirectory,'rest_mcf.par']);
 cov=[rest_mcf,wm,csf,g];
 tdcov = [zeros(1,size(cov,2));diff(cov)];
 allcovs = [cov,tdcov,cov.^2,tdcov.^2,rest_fd_matrix];
-save('36regsandspikes.1D','allcovs','-ASCII','-DOUBLE','-TABS');
+save([datadirectory,'/36regsandspikes.1D'],'allcovs','-ASCII','-DOUBLE','-TABS');
 
