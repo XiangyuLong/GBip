@@ -7,7 +7,7 @@ FWHM=$2
 datadirectory=$3
 analysisdirectory="${datadirectory}${participantID}/"
 
-# regression of the 36 regressors and spikes (Satterthwaite et al., 2013)
+# regression of the regressors and spikes (Satterthwaite et al., 2013)
 
 cd ${analysisdirectory}/func/
 
