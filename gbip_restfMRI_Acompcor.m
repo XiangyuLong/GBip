@@ -59,9 +59,13 @@ g = g - mean(g);
 
 rest_mcf = load([datadirectory,'/regressors/rest_mcf.par']);
 
+rest_mcf_qua = rest_mcf.*rest_mcf;
+
 rest_mcf_td = [zeros(1,size(rest_mcf,2));diff(rest_mcf)];
 
-allcovs = [rest_mcf,rest_mcf_td,csf_acompcor,wm_acompcor,g,rest_fd_matrix];
+rest_mcf_qua_td = [zeros(1,size(rest_mcf_qua,2));diff(rest_mcf_qua)];
+
+allcovs = [rest_mcf,rest_mcf_qua,rest_mcf_td,rest_mcf_qua_td,csf_acompcor,wm_acompcor,g,rest_fd_matrix];
 
 save([datadirectory,'/regressors/compcor_regsandspikes.1D'], 'allcovs', '-ASCII', '-DOUBLE','-TABS');
 
